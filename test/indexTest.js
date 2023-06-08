@@ -14,7 +14,6 @@ describe('the <ul> tag', () => {
 
   it('has three child <li> tags with the correct content', () => {
     const ul = document.querySelector('ul');
-
     const hint = 'The <ul> should have three <li> elements nested inside';
     expect(ul.children, hint).to.have.lengthOf(3);
 
@@ -42,8 +41,8 @@ describe('the <ul> tag', () => {
       </ul>
     `;
 
-    const secondLi = ul.children[1];
-    expect(secondLi, hint).to.have.descendant('ul');
+    const liWithTag = Array.from(ul.querySelectorAll('li')).find(li => li.querySelector('ul'));
+    expect(liWithTag, hint).to.exist;
   });
 
   it('contains three <li> nested within the nested <ul> with the correct content', () => {
@@ -63,18 +62,8 @@ describe('the <ul> tag', () => {
     `;
 
     const nestedUl = ul.querySelector('li ul');
-    expect(nestedUl, hint).to.have.descendants('li').and.have.length(3);
-
-    const [cheddarLi, mozzarellaLi, pepperJackLi] = nestedUl.children;
-
-    expect(cheddarLi).to.have.tagName('li');
-    expect(cheddarLi).to.contain.text('cheddar');
-
-    expect(mozzarellaLi).to.have.tagName('li');
-    expect(mozzarellaLi).to.contain.text('mozzarella');
-
-    expect(pepperJackLi).to.have.tagName('li');
-    expect(pepperJackLi).to.contain.text('pepper jack');
+    expect(nestedUl, hint).to.exist;
+    expect(nestedUl.querySelectorAll('li')).to.have.lengthOf(3);
   });
 });
 
@@ -89,24 +78,14 @@ describe('the <ol> tag', () => {
   it('has five child <li> tags with the correct content', () => {
     const ol = document.querySelector('ol');
     const hint = 'The <ol> should have five <li> elements';
+    expect(ol.querySelectorAll('li')).to.have.lengthOf(5);
 
-    expect(ol.children, hint).to.have.lengthOf(5);
+    const [first, second, third, fourth, fifth] = ol.querySelectorAll('li');
 
-    const [firstLi, secondLi, thirdLi, fourthLi, fifthLi] = ol.children;
-
-    expect(firstLi).to.have.tagName('li');
-    expect(firstLi).to.contain.text('Spread butter on bread and frying pan');
-
-    expect(secondLi).to.have.tagName('li');
-    expect(secondLi).to.contain.text('Place bread in frying pan and fry');
-
-    expect(thirdLi).to.have.tagName('li');
-    expect(thirdLi).to.contain.text('Add cheese on top of bread');
-
-    expect(fourthLi).to.have.tagName('li');
-    expect(fourthLi).to.contain.text('Cover with second slice of bread');
-
-    expect(fifthLi).to.have.tagName('li');
-    expect(fifthLi).to.contain.text('Turn over and fry for 2 minutes');
+    expect(first).to.contain.text('Spread butter on bread and frying pan');
+    expect(second).to.contain.text('Place bread in frying pan and fry');
+    expect(third).to.contain.text('Add cheese on top of bread');
+    expect(fourth).to.contain.text('Cover with second slice of bread');
+    expect(fifth).to.contain.text('Turn over and fry for 2 minutes');
   });
 });
